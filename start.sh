@@ -13,32 +13,31 @@ function install_minikube() {
 	# install minikube
 	curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 	install minikube-linux-amd64 /usr/local/bin/minikube
+	echo "-------------------------------------------"
 }
 
-
-# install_kubectl
 install_minikube
 
 # alias
-# alias k='kubectl'
-# alias m='minikube'
 echo "alias k='kubectl'" >> ~/.bashrc
 echo "alias m='minikube'" >> ~/.bashrc
 echo "alias which='command -v'" >> ~/.bashrc
+source /root/.bashrc
+echo "-------------------------------------------"
 
 yum install bash-completion
-echo 'source <(kubectl completion bash)' >> ~/.bashrc
-
-# Load the generated code
-source /root/.bashrc
-kubectl completion bash | sed 's/kubectl/k/g' > /tmp/completion.sh
-source /tmp/completion.sh
+kubectl completion bash > /tmp/completion1.sh
+source /tmp/completion1.sh
+kubectl completion bash | sed 's/kubectl/k/g' > /tmp/completion2.sh
+source /tmp/completion2.sh
+echo "-------------------------------------------"
 
 # minikube start 2 nodes
 minikube start
 minikube node add
 minikube node list
 
+echo "done!"
 
 
 
