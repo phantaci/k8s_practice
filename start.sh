@@ -16,7 +16,7 @@ function install_minikube() {
 }
 
 
-#install_kubectl
+# install_kubectl
 install_minikube
 
 # alias
@@ -27,9 +27,12 @@ echo "alias m='minikube'" >> ~/.bashrc
 echo "alias which='command -v'" >> ~/.bashrc
 
 yum install bash-completion
-echo 'source <(kubectl completion bash)' >>~/.bashrc
-source ~/.bashrc
-source <(kubectl completion bash | sed s/kubectl/k/g)
+echo 'source <(kubectl completion bash)' >> ~/.bashrc
+
+# Load the generated code
+source /root/.bashrc
+kubectl completion bash | sed 's/kubectl/k/g' > /tmp/completion.sh
+source /tmp/completion.sh
 
 # minikube start 2 nodes
 minikube start
